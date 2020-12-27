@@ -1,4 +1,4 @@
-﻿using ADVT.Core;
+﻿using ATDP.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdvancedPageObjectPattern
@@ -22,7 +22,7 @@ namespace AdvancedPageObjectPattern
         public void SearchTextInSearchEngine_Second()
         {
             SearchEngineMainPage page = new SearchEngineMainPage();
-            page.Navigate();
+            page.Navigate("https://bing.com");
             page.Search("hello");
             page.Validate().ResultsCount("204,000 RESULTS");
         }

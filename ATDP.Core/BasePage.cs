@@ -2,22 +2,16 @@
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using ATDP.Core;
 using OpenQA.Selenium;
 
-namespace ADVT.Core
+namespace ATDP.Core
 {
     public class BasePage<M> where M : BasePageElementMap, new()
     {
-        protected readonly string url;
-
-        public BasePage(string url)
-        {
-            this.url = url;
-        }
-
         protected M Map => new M();
 
-        public void Navigate()
+        public void Navigate(string url)
         {
             Driver.Browser.Navigate().GoToUrl(url);
         }
@@ -27,12 +21,6 @@ namespace ADVT.Core
         where M : BasePageElementMap, new()
         where V : BasePageValidator<M>, new()
     {
-        public BasePage(string url)
-            : base(url)
-        {
-            
-        }
-
         public V Validate() => new V();
     }
 }

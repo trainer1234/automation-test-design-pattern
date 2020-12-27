@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using FluentAssertions.Equivalency;
 using OpenQA.Selenium;
@@ -10,7 +11,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Safari;
 using OpenQA.Selenium.Support.UI;
 
-namespace ADVT.Core
+namespace ATDP.Core
 {
     public enum BrowserTypes
     {
@@ -54,12 +55,14 @@ namespace ADVT.Core
             private set => browserWait = value;
         }
 
-        public static void StartBrowser(BrowserTypes browserType = BrowserTypes.Firefox, int defaultTimeout = 30)
+        public static void StartBrowser(BrowserTypes browserType = BrowserTypes.Chrome, int defaultTimeout = 30)
         {
             switch (browserType)
             {
                 case BrowserTypes.Chrome:
-                    Browser = new ChromeDriver();
+                    var chromeOptions = new ChromeOptions();
+                    Browser = new ChromeDriver(Path.Join(AppDomain.CurrentDomain.BaseDirectory, "drivers"));
+                    Browser.Manage().Window.Maximize();
                     break;
                 case BrowserTypes.Firefox:
                     Browser = new FirefoxDriver();
@@ -74,7 +77,11 @@ namespace ADVT.Core
                     Browser = new InternetExplorerDriver();
                     break;
             }
-            BrowserWait = new WebDriverWait(Browser, TimeSpan.FromSeconds(defaultTimeout));
+            BrowserWait = new WebDriverWait(Browser, TimeSpan.FromSeconds(defaultTimeout))
+            {
+                PollingInterval = TimeSpan.FromSeconds(2)
+            };
+            BrowserWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
         }
 
         public static void StopBrowser()

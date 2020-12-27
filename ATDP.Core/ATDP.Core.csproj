@@ -8,4 +8,14 @@
     <ProjectReference Include="..\ATDP.Packages\ATDP.Packages.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="drivers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="drivers\chromedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
-namespace ADVT.Core
+namespace ATDP.Core
 {
     public class BasePageElementMap
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using OpenQA.Selenium;
 
-namespace ADVT.Core
+namespace ATDP.Core
 {
     public class BasePageValidator<M> where M : BasePageElementMap, new()
     {
