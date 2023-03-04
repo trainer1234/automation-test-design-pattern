@@ -21,10 +21,17 @@ namespace AdvancedPageObjectPattern
         [TestMethod]
         public void SearchTextInSearchEngine_Second()
         {
-            SearchEngineMainPage page = new SearchEngineMainPage();
-            page.Navigate("https://bing.com");
-            page.Search("hello");
-            page.Validate().ResultsCount("204,000 RESULTS");
+            SearchEngineMainPage.Instance.Navigate()
+                .Search("hello")
+                .Validate(SearchEngineMainPage.Instance).ResultsCount("Results")
+                .ClickImagesTab()
+                .ClickFilterButton()
+                .SetSize()
+                .SetColor()
+                .SetTypes()
+                .SetPeople()
+                .SetDate()
+                .SetLicense();
         }
     }
 }

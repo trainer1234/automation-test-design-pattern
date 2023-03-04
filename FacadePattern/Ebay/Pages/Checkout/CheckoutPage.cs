@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using ATDP.Core;
 using FacadePattern.Ebay.Model;
 using FluentAssertions;
@@ -6,11 +7,13 @@ using OpenQA.Selenium.Support.UI;
 
 namespace FacadePattern.Ebay.Pages.Checkout
 {
-    public class CheckoutPage : BasePage<CheckoutPageMap, CheckoutPageValidator>
+    public class CheckoutPage : BasePageSingletonDerived<CheckoutPage, CheckoutPageMap, CheckoutPageValidator>
     {
+        private CheckoutPage() { }
+
         public void FillInShippingInfo(CustomerInfo customerInfo)
         {
-            new SelectElement(Map.ShippingCountry).SelectByValue(customerInfo.CountryCode2);
+            Map.ShippingCountry.SelectByValue(customerInfo.CountryCode2);
             Map.IsSpinnerNotDisplayed.Should().BeTrue();
             Map.ShippingFirstName.SendKeys(customerInfo.FirstName);
             Map.ShippingLastName.SendKeys(customerInfo.LastName);

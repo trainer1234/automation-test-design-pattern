@@ -8,14 +8,26 @@ using OpenQA.Selenium;
 
 namespace FacadePattern.Ebay.Pages.SearchResult
 {
-    public class SearchResultPage : BasePage<SearchResultPageMap, SearchResultPageValidator>
+    public class SearchResultPage : BasePageSingletonDerived<SearchResultPage, SearchResultPageMap, SearchResultPageValidator>
     {
-        public void ClickAndSaveSearchResultInfo(int index)
+        private SearchResultPage() { }
+
+        public void SwitchToItemPage(int index)
         {
-            SaveSearchResultInfo(index);
+            string originalWindow = Driver.Browser.CurrentWindowHandle;
+
             var searchResult = Map.SearchResultImages?.ElementAt(index);
             searchResult?.Click();
-            searchResult?.Click(); // Not sure why but have to click this element twice
+            Driver.BrowserWait.Until(wd => wd.WindowHandles.Count == 2);
+
+            foreach (string window in Driver.Browser.WindowHandles)
+            {
+                if (originalWindow != window)
+                {
+                    Driver.Browser.SwitchTo().Window(window);
+                    break;
+                }
+            }
         }
 
         public void SaveSearchResultInfo(int index)

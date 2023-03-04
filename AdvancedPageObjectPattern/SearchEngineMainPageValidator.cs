@@ -3,12 +3,13 @@ using FluentAssertions;
 
 namespace AdvancedPageObjectPattern
 {
-    public class SearchEngineMainPageValidator : BasePageValidator<SearchEngineMainPageElementMap>
+    public class SearchEngineMainPageValidator : BaseFluentPageValidator<SearchEngineMainPage, SearchEngineMainPageElementMap, SearchEngineMainPageValidator>
     {
-        public void ResultsCount(string expectedCount)
+        public SearchEngineMainPage ResultsCount(string expectedCount)
         {
-            this.Map.ResultsCountDiv.Text.Should()
-                .Contain(expectedCount, "The results DIV doesn't contains the specified text.");
+            this.Map.ResultsCountDiv.Text.ToLower().Should()
+                .Contain(expectedCount.ToLower(), "The results DIV doesn't contains the specified text.");
+            return PageInstance;
         }
     }
 }

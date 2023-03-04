@@ -8,9 +8,11 @@ namespace FacadePattern.Ebay.Pages.Checkout
     public class CheckoutPageMap : BasePageElementMap
     {
         public IWebElement Subtotal => Driver.BrowserWait.Until(d =>
-            d.FindElement(By.CssSelector(".summary-item tr[data-test-id='SUB_TOTAL'] .amount .text-display span")));
+            d.FindElement(By.CssSelector(".summary-item tr[data-test-id='SUB_TOTAL'] .amount")));
+        public IWebElement Shipping => Driver.BrowserWait.Until(d =>
+            d.FindElement(By.CssSelector(".summary-item tr[data-test-id='SHIPPING'] .amount")));
         public IWebElement Total => Driver.BrowserWait.Until(d =>
-            d.FindElement(By.CssSelector(".summary-item tr[data-test-id='TOTAL'] .amount .text-display span")));
+            d.FindElement(By.CssSelector(".summary-item tr[data-test-id='TOTAL'] .amount")));
         public IWebElement ConfirmAndPayButton => Driver.BrowserWait.Until(d =>
             d.FindElement(By.CssSelector("button[data-test-id='CONFIRM_AND_PAY_BUTTON']")));
         public bool IsSpinnerNotDisplayed => Driver.BrowserWait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.ClassName("checkout-spinner--wrapper")));
@@ -18,11 +20,11 @@ namespace FacadePattern.Ebay.Pages.Checkout
         
 
         public IWebElement ItemReviewTitle => Driver.BrowserWait.Until(d =>
-            d.FindElement(By.CssSelector("div[data-test-id='CART_DETAILS_SELLER_BUCKET'] .item-details-section .text-display span")));
+            d.FindElement(By.CssSelector("div[data-test-id='CART_DETAILS_SELLER_BUCKET'] .item-details-section .item-title")));
         public IWebElement ItemReviewPrice => Driver.BrowserWait.Until(d =>
-            d.FindElement(By.CssSelector("div[data-test-id='CART_DETAILS_SELLER_BUCKET'] .price-details .text-display span")));
+            d.FindElement(By.CssSelector("div[data-test-id='CART_DETAILS_SELLER_BUCKET'] .price-details")));
 
-        public IWebElement ShippingCountry => Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.Id("country")));
+        public SelectElement ShippingCountry => new SelectElement(Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.Id("country"))));
         public IWebElement ShippingFirstName => Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.Id("firstName")));
         public IWebElement ShippingLastName => Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.Id("lastName")));
         public IWebElement ShippingAddress => Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.Id("addressLine1")));
@@ -38,7 +40,7 @@ namespace FacadePattern.Ebay.Pages.Checkout
         public IWebElement AddShippingAddressButton => Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("button[data-test-id='ADD_ADDRESS_SUBMIT']")));
 
         public IWebElement PayWithCardRadioButton =>
-            Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.Id("srs1")));
+            Driver.BrowserWait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("div[data-test-id='PAYMENT_METHODS_PAYMENT_METHOD_SELECTION']")));
         public IWebElement CardNumber => Driver.BrowserWait.Until(d =>
             d.FindElement(By.Id("cardNumber")));
         public IWebElement CardExpiryDate => Driver.BrowserWait.Until(d =>
@@ -52,7 +54,7 @@ namespace FacadePattern.Ebay.Pages.Checkout
         public IWebElement BillingAddress => Driver.BrowserWait.Until(d =>
             d.FindElement(By.CssSelector(".billing-summary .text-display span")));
         public IWebElement AddCardButton => Driver.BrowserWait.Until(d =>
-            d.FindElement(By.CssSelector("#credit-card-details button[data-test-id='ADD_CARD'")));
+            d.FindElement(By.CssSelector("#credit-card-details button[data-test-id='ADD_CARD']")));
 
         public IWebElement Coupon => Driver.BrowserWait.Until(d =>
             d.FindElement(By.Id("redemptionCode")));

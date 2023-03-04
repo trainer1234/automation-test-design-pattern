@@ -2,8 +2,10 @@
 
 namespace FacadePattern.Ebay.Pages.Item
 {
-    public class ItemPage : BasePage<ItemPageMap, ItemPageValidator>
+    public class ItemPage : BasePageSingletonDerived<ItemPage, ItemPageMap, ItemPageValidator>
     {
+        private ItemPage() { }
+
         public void BuyNow()
         {
             Map.BuyNowButton.Click();

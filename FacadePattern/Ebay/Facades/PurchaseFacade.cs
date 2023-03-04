@@ -16,18 +16,19 @@ namespace FacadePattern.Ebay.Facades
         private ItemPage itemPage;
         private CheckoutPage checkoutPage;
 
-        public HomePage HomePage => homePage ?? (homePage = new HomePage());
-        public SearchResultPage SearchResultPage => searchResultPage ?? (searchResultPage = new SearchResultPage());
-        public ItemPage ItemPage => itemPage ?? (itemPage = new ItemPage());
-        public CheckoutPage CheckoutPage => checkoutPage ?? (checkoutPage = new CheckoutPage());
+        public HomePage HomePage => homePage ??= HomePage.Instance;
+        public SearchResultPage SearchResultPage => searchResultPage ??= SearchResultPage.Instance;
+        public ItemPage ItemPage => itemPage ??= ItemPage.Instance;
+        public CheckoutPage CheckoutPage => checkoutPage ??= CheckoutPage.Instance;
 
         public void PurchaseItem(string itemName, CustomerInfo customerInfo)
         {
-            HomePage.Navigate("https://ebay.com");
+            HomePage.Navigate();
             HomePage.Validate().Logo();
             HomePage.Search(itemName);
             SearchResultPage.Validate().SearchResultCount();
-            SearchResultPage.ClickAndSaveSearchResultInfo(0);
+            SearchResultPage.SaveSearchResultInfo(0);
+            SearchResultPage.SwitchToItemPage(0);
             ItemPage.Validate().Name();
             ItemPage.Validate().Price();
             ItemPage.BuyNow();

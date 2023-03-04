@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using ATDP.Core;
+using ATDP.Core.Singleton;
 using OpenQA.Selenium;
 
 namespace ATDP.Core
 {
-    public class BasePage<M> where M : BasePageElementMap, new()
+    public abstract class BasePageSingletonDerived<S, M> : ThreadSafeNestedConstructorSingleton<S>
+        where S : BasePageSingletonDerived<S, M>
+        where M : BasePageElementMap, new()
     {
-        private static BasePage<M> instance;
-
-        protected BasePage()
-        {
-        }
-
-        public static BasePage<M> Instance => instance ?? (instance = new BasePage<M>());
         protected M Map => new M();
 
         public virtual void Navigate(string url)
@@ -24,7 +20,8 @@ namespace ATDP.Core
         }
     }
 
-    public class BasePage<M, V> : BasePage<M>
+    public abstract class BasePageSingletonDerived<S, M, V> : BasePageSingletonDerived<S, M>
+        where S : BasePageSingletonDerived<S, M, V>
         where M : BasePageElementMap, new()
         where V : BasePageValidator<M>, new()
     {
