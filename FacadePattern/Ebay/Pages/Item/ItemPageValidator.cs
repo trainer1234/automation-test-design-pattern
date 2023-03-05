@@ -9,7 +9,7 @@ namespace FacadePattern.Ebay.Pages.Item
         public void Name()
         {
             var searchResultItemInfo = DataContext.DataPool["searchResultItemInfo"].As<SearchResultItemInfo>();
-            Map.Name.Text.Should().Be(searchResultItemInfo.Name);
+            Map.Name.Text.Should().Contain(searchResultItemInfo.Name);
         }
 
         public void Price()

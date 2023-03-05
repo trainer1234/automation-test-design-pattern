@@ -9,18 +9,22 @@ namespace ATDP.Core
 {
     public class BasePage<M> where M : BasePageElementMap, new()
     {
-        private static BasePage<M> instance;
-
-        protected BasePage()
+        protected readonly string url;
+        protected BasePage(string url)
         {
+            this.url = url;
         }
 
-        public static BasePage<M> Instance => instance ?? (instance = new BasePage<M>());
+        public BasePage()
+        {
+            url = null;
+        }
+
         protected M Map => new M();
 
-        public virtual void Navigate(string url)
+        public virtual void Navigate(string part = "")
         {
-            Driver.Browser.Navigate().GoToUrl(url);
+            Driver.Browser.Navigate().GoToUrl(String.Concat(url, part));
         }
     }
 
@@ -28,6 +32,14 @@ namespace ATDP.Core
         where M : BasePageElementMap, new()
         where V : BasePageValidator<M>, new()
     {
+        public BasePage(string url) : base(url)
+        {
+        }
+
+        public BasePage()
+        {
+        }
+
         public V Validate() => new V();
     }
 }
